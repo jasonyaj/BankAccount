@@ -1,9 +1,11 @@
 class BankAccount:
     bank_name = 'First National Dojo'
+    members_list = []
 
     def __init__(self, int_rate, balance):
         self.int_rate = int_rate
         self.balance = balance
+        BankAccount.members_list.append(self)
 
     # Methods
     def deposit(self, amount):
@@ -27,12 +29,16 @@ class BankAccount:
             self.balance *= (1 + self.int_rate)
         return self
 
-# print(jason.bank_name)
-# jason.bank_name = 'Dojo Credit Union'
-# print(jason.bank_name)
+    @classmethod
+    def print_all_instances( cls ):
+        for members in cls.members_list:
+            members.display_account_info()
+
 
 jason = BankAccount(0.01, 100)
 debbie = BankAccount(0.01, 500)
 
-jason.deposit(50).deposit(75).deposit(25).withdraw(20).yield_interest().display_account_info()
-debbie.deposit(50).deposit(70).withdraw(20).withdraw(40).withdraw(40).withdraw(800).yield_interest().display_account_info()
+jason.deposit(50).deposit(75).deposit(25).withdraw(20).yield_interest()
+debbie.deposit(50).deposit(70).withdraw(20).withdraw(40).withdraw(40).withdraw(800).yield_interest()
+
+BankAccount.print_all_instances()
